@@ -15,7 +15,7 @@ async function fetchGiphyAPI() {
     const gf = new GiphyFetch(APIKEY);
     const gifs = await gf.emoji();
     const random_gif = gifs.data[Math.floor(Math.random() * gifs.data.length)]
-    console.log('API Called gif is :');
+    console.log('API Called gif url is :');
     console.log(random_gif.url);
     return random_gif.url;
 }
@@ -32,16 +32,8 @@ export default {
         },
         changeEmoji() {
             console.log('fetch..');
-            fetchGiphyAPI().then((response) => {
-                return response.json();
-            }).then((json) => {
-                console.log(json);
-            });
-    
-            // return this.$store.dispatch('changeURL', newURL);
-    
-            
-            
+            fetchGiphyAPI().then(data => this.$store.commit('changeURL', data));
+            console.log('Global state is ' + this.$store.state.url)
         }
     }, 
   data(){

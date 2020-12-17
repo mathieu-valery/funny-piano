@@ -5,10 +5,10 @@
 <script>
 export default {
   name: 'Emoji',
-    computed: {
+  computed: {
         url() {
             return this.$store.state.url
         }
-    } 
+    }
 }
 </script>

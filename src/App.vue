@@ -1,21 +1,44 @@
 <template>
   <div id="app">
     <h1>Funny Piano</h1>
-    <v-coucou></v-coucou>
+    <v-emoji></v-emoji>
     <v-piano></v-piano>
   </div>
 </template>
 
 <script>
-import VCoucou from './coucou.vue'
+import VEmoji from './emoji.vue'
 import VPiano from './piano.vue'
+
+
+// class GifStore {
+//   constructor () {
+//     this.state = {
+//       selectedGif: {}
+//     }
+//   }
+  
+//   setGifAction (newValue) {
+//      this.state.selectedGif = newValue
+//   }
+// }
+
+// export let gif_store = new GifStore();
+// console.log(gif_store);
+
 export default {
   name: 'App',
   components: {
-    VCoucou,
-    VPiano
+    VPiano,
+    VEmoji
   }
+  // data() {
+  //   return {
+  //     gifURL: "https://media.giphy.com/media/6f6HMJ2iGNLyM/giphy.gif"
+  //   }
+  // }
 }
+
 </script>
 
 <style scoped>

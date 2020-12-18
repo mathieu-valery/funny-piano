@@ -7,17 +7,22 @@ Vue.use(Vuex);
  
 export default new Vuex.Store({
  state: {
-    url: "https://media.giphy.com/media/6f6HMJ2iGNLyM/giphy.gif"
+    url: "https://media.giphy.com/media/6f6HMJ2iGNLyM/giphy.gif",
+
  },
- getters: {},
+ getters: {
+     url: state => state.url,
+ 
+ },
  mutations: {
      changeURL (state, payload) {
          this.state.url = payload
-     }
+     },
+     changeKey (state, payload) {
+        this.state.keyPressed = payload
+    }
  },
  actions: {
-    changeURL (context, payload) {
-        context.commit('changeURL', payload)
-      }
+
  }
 });

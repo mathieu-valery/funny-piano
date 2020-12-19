@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class='piano'>
-            <div class="key" :id="note.name" :key="note.name"  v-for="note in notes" @click="play(note.name); changeEmoji()" :data-note='note.name' :class="{'black': note.type === 'black', 'white': note.type === 'white'}"></div>
+            <div class="key" :id="note.name" :key="note.name"  v-for="note in notes" @click="play(note.name)" :data-note='note.name' :class="{'black': note.type === 'black', 'white': note.type === 'white'}"></div>
         </div>
     </div>
 </template>
@@ -17,7 +17,7 @@ async function fetchGiphyAPI() {
     const random_gif = gifs.data[Math.floor(Math.random() * gifs.data.length)]
     console.log('API Called gif  is :');
     console.log(random_gif);
-    const stringURL = `https://media.giphy.com/media/${random_gif.id}/giphy.gif`
+    const stringURL = `https://media.giphy.com/media/${random_gif.id}/giphy.gif`;
     return stringURL;
 }
 
@@ -29,7 +29,8 @@ export default {
             const audio = document.createElement('audio');
             audio.src = encodeURIComponent(`/assets/sounds/${note}.mp3`);
             audio.currentTime = 0;
-            audio.play()
+            audio.play();
+            this.changeEmoji();
 
             const key = document.getElementById(note); //feedback key animation
             key.classList.add('active');
@@ -84,7 +85,7 @@ export default {
          }]
       }
     },
-    mounted() {
+    mounted() { //keyboard mapping
     document.addEventListener('keydown', event => {
         console.log(event.key);
         const BLACK_KEY = ['z', 'e', 't', 'y', 'u'];
@@ -97,14 +98,11 @@ export default {
         const blackKeyIndex = BLACK_KEY.indexOf(key);
         
             if (whiteKeyIndex > -1) {
-                this.play(whiteKeys[whiteKeyIndex].dataset.note);
-                this.changeEmoji();
+                this.play(whiteKeys[whiteKeyIndex].dataset.note);      
             }
 
             if (blackKeyIndex > -1) {
-                this.play(blackKeys[blackKeyIndex].dataset.note)
-                this.changeEmoji();
-        
+                this.play(blackKeys[blackKeyIndex].dataset.note)   
             }
         })
     }

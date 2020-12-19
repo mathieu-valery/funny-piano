@@ -18,9 +18,6 @@ export default new Vuex.Store({
      changeURL (state, payload) {
          this.state.url = payload
      },
-     changeKey (state, payload) {
-        this.state.keyPressed = payload
-    }
  },
  actions: {
 

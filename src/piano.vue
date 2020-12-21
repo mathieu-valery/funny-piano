@@ -87,26 +87,22 @@ export default {
         const key = event.key;
         const Keys = document.querySelectorAll('.key');
         const KeyIndex = KEYS.indexOf(key);
-        
             if (KeyIndex > -1) {
                 const note = Keys[KeyIndex].dataset.note
                 this.play(note);
                 document.getElementById(note).classList.add('active');     
             }
-
         });
         document.addEventListener('keyup', event => {
         const KEYS = ['q', 'z', 's', 'e', 'd', 'f', 't', 'g', 'y', 'h', 'u', 'j'];
         const key = event.key;
         const Keys = document.querySelectorAll('.key');
         const KeyIndex = KEYS.indexOf(key);
-
             if (KeyIndex > -1) {
                 Keys[KeyIndex].classList.remove('active');      
             }
         });
     }
-
 }
 
 </script>

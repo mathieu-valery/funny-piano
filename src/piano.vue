@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class='piano'>
-            <div class="key" :id="note.name" :key="note.name"  v-for="note in notes" @click="play(note.name)" :data-note='note.name' :class="{'black': note.type === 'black', 'white': note.type === 'white'}"></div>
+            <div class="key" :id="note.name" :key="note.name"  v-for="note in notes" @click="play(note.name); animate(note.name)" :data-note='note.name' :class="{'black': note.type === 'black', 'white': note.type === 'white'}"></div>
         </div>
     </div>
 </template>
@@ -11,12 +11,11 @@
 import { GiphyFetch } from '@giphy/js-fetch-api'
 
 async function fetchGiphyAPI() {
-    const APIKEY = 'ABDpLGBTr66BQ16DKHlSwwOF5xN3tauz';
+    console.log(process.env.VUE_APP_GIPHY_API_KEY);
+    const APIKEY = process.env.VUE_APP_GIPHY_API_KEY;
     const gf = new GiphyFetch(APIKEY);
     const gifs = await gf.emoji();
     const random_gif = gifs.data[Math.floor(Math.random() * gifs.data.length)]
-    console.log('API Called gif  is :');
-    console.log(random_gif);
     const stringURL = `https://media.giphy.com/media/${random_gif.id}/giphy.gif`;
     return stringURL;
 }
@@ -25,23 +24,21 @@ export default {
   name: 'Piano',
   methods: { 
         play(note) {
-            console.log(note);
             const audio = document.createElement('audio');
             audio.src = encodeURIComponent(`/assets/sounds/${note}.mp3`);
             audio.currentTime = 0;
             audio.play();
             this.changeEmoji();
-
-            const key = document.getElementById(note); //feedback key animation
-            key.classList.add('active');
-            audio.addEventListener('ended', () => {
-                key.classList.remove('active');
-            })
         },
         changeEmoji() {
-            console.log('fetch..');
             fetchGiphyAPI().then(data => this.$store.commit('changeURL', data));
-            console.log('Global state is ' + this.$store.state.url)
+        },
+        animate(note) {
+            const key = document.getElementById(note); //feedback key animation
+            key.classList.add('active');
+            setTimeout(function(){ 
+                key.classList.remove('active'); 
+            }, 250);
         }
     }, 
   data(){
@@ -87,25 +84,30 @@ export default {
     },
     mounted() { //keyboard mapping
     document.addEventListener('keydown', event => {
-        console.log(event.key);
-        const BLACK_KEY = ['z', 'e', 't', 'y', 'u'];
-        const WHITE_KEY = ['q', 's', 'd', 'f', 'g', 'h', 'j'];
+        const KEYS = ['q', 'z', 's', 'e', 'd', 'f', 't', 'g', 'y', 'h', 'u', 'j'];
         const key = event.key;
-
-        const whiteKeys = document.querySelectorAll('.key.white');
-        const blackKeys = document.querySelectorAll('.key.black');
-        const whiteKeyIndex = WHITE_KEY.indexOf(key);
-        const blackKeyIndex = BLACK_KEY.indexOf(key);
+        const Keys = document.querySelectorAll('.key');
+        const KeyIndex = KEYS.indexOf(key);
         
-            if (whiteKeyIndex > -1) {
-                this.play(whiteKeys[whiteKeyIndex].dataset.note);      
+            if (KeyIndex > -1) {
+                const note = Keys[KeyIndex].dataset.note
+                this.play(note);
+                document.getElementById(note).classList.add('active');     
             }
 
-            if (blackKeyIndex > -1) {
-                this.play(blackKeys[blackKeyIndex].dataset.note)   
+        });
+        document.addEventListener('keyup', event => {
+        const KEYS = ['q', 'z', 's', 'e', 'd', 'f', 't', 'g', 'y', 'h', 'u', 'j'];
+        const key = event.key;
+        const Keys = document.querySelectorAll('.key');
+        const KeyIndex = KEYS.indexOf(key);
+
+            if (KeyIndex > -1) {
+                Keys[KeyIndex].classList.remove('active');      
             }
-        })
+        });
     }
+
 }
 
 </script>
@@ -122,7 +124,7 @@ export default {
     width: var(--width);
 }
 .white {
-    --width: 8vw;
+    --width: 5vw;
     background-color: white;
     border: 1px solid #333;
 }
@@ -132,7 +134,7 @@ export default {
 }
 
 .black {
-    --width: 5vw;
+    --width: 3.125vw;
     background-color: black;
     border: 1px solid #333;
     margin-right: calc(var(--width) / -2);
@@ -144,5 +146,14 @@ export default {
 .black.active {
     background-color: #333;
 }
+
+ @media screen and (max-width: 1025px) {
+    .white {
+        --width: 8vw;
+    }
+    .black {
+        --width: 5vw;
+    }
+} 
 
 </style>

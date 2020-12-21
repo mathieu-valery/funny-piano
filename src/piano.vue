@@ -11,7 +11,6 @@
 import { GiphyFetch } from '@giphy/js-fetch-api'
 
 async function fetchGiphyAPI() {
-    console.log(process.env.VUE_APP_GIPHY_API_KEY);
     const APIKEY = process.env.VUE_APP_GIPHY_API_KEY;
     const gf = new GiphyFetch(APIKEY);
     const gifs = await gf.emoji();

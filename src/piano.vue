@@ -129,6 +129,11 @@ export default {
     height: calc(var(--width) * 4);
     width: var(--width);
 }
+
+.key:hover {
+    cursor: pointer
+}
+
 .white {
     --width: 5vw;
     background-color: white;

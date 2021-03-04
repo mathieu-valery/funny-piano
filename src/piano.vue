@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class='piano'>
-            <div class="key" :id="note.key" :key="note.name"  v-for="note in notes" @click="play(note.name); animate(note.key)" :data-note='note.name' :class="{'black': note.type === 'black', 'white': note.type === 'white'}"></div>
+            <div class="key" :id="note.key" :key="note.name"  v-for="note in notes" @click="play(note.name); animate(note.key)" :data-note='note.name' :class="{'black': note.type === 'black', 'white': note.type === 'white'}"><p>{{note.key}}</p></div>
         </div>
     </div>
 </template>
@@ -142,6 +142,7 @@ export default {
 .black {
     --width: 3.125vw;
     background-color: black;
+    color: white;
     border: 1px solid #333;
     margin-right: calc(var(--width) / -2);
     margin-left: calc(var(--width) / -2);
@@ -153,6 +154,18 @@ export default {
     background-color: #333;
 }
 
+.black p {
+    position: relative;
+    top: calc((var(--width) * 3.3));
+    left: 10px;
+}
+
+.white p {
+    position: relative;
+    top: calc((var(--width) * 3.5));
+    left: 10px;
+}
+
  @media screen and (max-width: 1025px) {
     .white {
         --width: 10.4vw;
@@ -160,6 +173,17 @@ export default {
     .black {
         --width: 7vw;
     }
+
+}
+
+ @media screen and (max-width: 415px) {
+    .black p {
+        font-size: 0px;
+    }
+
+    .white p {
+        font-size: 0px;
+    }  
 } 
 
 </style>

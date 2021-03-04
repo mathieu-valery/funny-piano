@@ -144,10 +144,10 @@ export default {
 
  @media screen and (max-width: 1025px) {
     .white {
-        --width: 8vw;
+        --width: 10.4vw;
     }
     .black {
-        --width: 5vw;
+        --width: 7vw;
     }
 } 
 

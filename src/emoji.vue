@@ -21,12 +21,14 @@ export default {
 img {
     width: 10vw;
     padding-bottom: 10vh;
+
 }
 
 @media screen and (max-width: 1025px) {
     img {
         width: 20vw;
         padding-bottom: 5vh;
+       
     }
 
 }

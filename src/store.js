@@ -7,7 +7,7 @@ Vue.use(Vuex);
  
 export default new Vuex.Store({
  state: {
-    url: "",
+    url: "https://media.giphy.com/media/lRXY41yFFi9RfNXyPN/giphy.gif",
 
  },
  getters: {

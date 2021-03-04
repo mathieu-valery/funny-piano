@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class='piano'>
-            <div class="key" :id="note.name" :key="note.name"  v-for="note in notes" @click="play(note.name); animate(note.name)" :data-note='note.name' :class="{'black': note.type === 'black', 'white': note.type === 'white'}"></div>
+            <div class="key" :id="note.key" :key="note.name"  v-for="note in notes" @click="play(note.name); animate(note.key)" :data-note='note.name' :class="{'black': note.type === 'black', 'white': note.type === 'white'}"></div>
         </div>
     </div>
 </template>
@@ -44,66 +44,77 @@ export default {
       return {
          notes: [{
              name: 'C',
-             type: 'white'
+             type: 'white',
+             key: 'q'
          },{
              name: 'C#',
-             type: 'black'
+             type: 'black',
+             key: 'z'
          },{
              name: 'D',
-             type: 'white'
+             type: 'white',
+             key: 's'
          },{
              name: 'D#',
-             type: 'black'
+             type: 'black',
+             key: 'e'
          },{
              name: 'E',
-             type: 'white'
+             type: 'white',
+             key: 'd'
          },{
              name: 'F',
-             type: 'white'
+             type: 'white',
+             key: 'f'
          },{
              name: 'F#',
-             type: 'black'
+             type: 'black',
+             key: 't'
          },{
              name: 'G',
-             type: 'white'
+             type: 'white',
+             key: 'g'
          },{
              name: 'G#',
-             type: 'black'
+             type: 'black',
+             key: 'y'
          },{
              name: 'A',
-             type: 'white'
+             type: 'white',
+             key: 'h'
          },{
              name: 'A#',
-             type: 'black'
+             type: 'black',
+             key: 'u'
          },{
              name: 'B',
-             type: 'white'
+             type: 'white',
+             key: 'j'
          }]
       }
     },
     mounted() { //keyboard mapping
-    document.addEventListener('keydown', event => {
-        const KEYS = ['q', 'z', 's', 'e', 'd', 'f', 't', 'g', 'y', 'h', 'u', 'j'];
-        const key = event.key;
-        const Keys = document.querySelectorAll('.key');
-        const KeyIndex = KEYS.indexOf(key);
-            if (KeyIndex > -1) {
-                const note = Keys[KeyIndex].dataset.note
-                this.play(note);
-                document.getElementById(note).classList.add('active');     
-            }
+        document.addEventListener('keydown', event => { 
+            this.notes.forEach(note => {
+                if (note.key == event.key) {
+                    this.play(note.name);
+                    document.getElementById(note.key).classList.add('active');
+                    return
+                }
+            });
         });
+
         document.addEventListener('keyup', event => {
-        const KEYS = ['q', 'z', 's', 'e', 'd', 'f', 't', 'g', 'y', 'h', 'u', 'j'];
-        const key = event.key;
-        const Keys = document.querySelectorAll('.key');
-        const KeyIndex = KEYS.indexOf(key);
-            if (KeyIndex > -1) {
-                Keys[KeyIndex].classList.remove('active');      
-            }
+            this.notes.forEach(note => {
+                if (note.key == event.key) {
+                    document.getElementById(note.key).classList.remove('active');
+                    return
+                }
+            });
         });
     }
 }
+    
 
 </script>
 

@@ -12,7 +12,6 @@ import { GiphyFetch } from '@giphy/js-fetch-api'
 
 async function fetchGiphyAPI() {
     const APIKEY = process.env.VUE_APP_GIPHY_API_KEY;
-    console.log(APIKEY)
     const gf = new GiphyFetch(APIKEY);
     const gifs = await gf.emoji();
     const random_gif = gifs.data[Math.floor(Math.random() * gifs.data.length)]
